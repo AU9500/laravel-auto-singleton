@@ -1,0 +1,8 @@
+/.idea
+/docker-compose.yml
+/vendor/
+/sail/
+/package-lock.json
+/start.sh
+/.env
+/.phpunit.result.cache

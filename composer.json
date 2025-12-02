@@ -1,0 +1,39 @@
+{
+  "name": "au9500/laravel-auto-singleton",
+  "description": "PHP 8 attribute to auto-register Laravel singletons.",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Au9500\\LaravelAutoSingleton\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Au9500\\LaravelAutoSingleton\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Andreas Uretschnig"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^8.2",
+    "illuminate/support": "^10.0|^11.0|^12.0"
+  },
+  "require-dev": {
+    "laravel/sail": "^1.48",
+    "laravel/pint": "^1.26",
+    "phpunit/phpunit": "^12.4",
+    "orchestra/testbench": "^10.8"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Au9500\\LaravelAutoSingleton\\AutoSingletonServiceProvider"
+      ]
+    }
+  }
+}
