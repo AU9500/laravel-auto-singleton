@@ -1,28 +1,29 @@
-# Laravel Auto Singleton
+# 🔗 Laravel Auto Singleton
 
-A Laravel package that automatically registers classes as singletons using a PHP 8 attribute.  
-Add the AutoSingleton attribute to a class and it becomes a singleton during application boot.
+Automatically register classes as singletons in the Laravel service container using a clean PHP 8 attribute.  
+No more manual container bindings — just add an attribute and you're done. ⚡
 
-------------------------------------------------------------
-FEATURES
-------------------------------------------------------------
+---
 
-- Register classes as singletons via PHP 8 attributes
-- Optionally bind an interface: AutoSingleton(Interface::class)
-- No manual service provider bindings
-- Scans only the directories you configure
-- Extremely lightweight
-- Supports Laravel 10, 11, 12
+## ✨ Features
 
-------------------------------------------------------------
-INSTALLATION
-------------------------------------------------------------
+- 🧩 Register any class as a singleton using a simple PHP 8 attribute
+- 🎯 Optional: Bind an interface to its implementation
+- 🔍 Scans only the directories you choose
+- 🔌 Zero boilerplate — no service provider bindings required
+- ⚙️ Respects Laravel config and auto-discovery
+- 🚀 Works with Laravel 10, 11, 12
+- 🪶 Lightweight and dependency-free
 
-Run:
+---
+
+## 📦 Installation
+
+Install via Composer:
 
     composer require au9500/laravel-auto-singleton
 
-Publish the config file:
+Publish the configuration file:
 
     php artisan vendor:publish --tag=auto-singleton-config
 
@@ -30,9 +31,9 @@ This creates:
 
     config/auto-singleton.php
 
-------------------------------------------------------------
-CONFIGURATION
-------------------------------------------------------------
+---
+
+## ⚙️ Configuration
 
 Example contents of config/auto-singleton.php:
 
@@ -45,15 +46,13 @@ Example contents of config/auto-singleton.php:
         ],
     ];
 
-Only classes inside these directories will be scanned.
+`directories` determines where attribute scanning is performed.
 
-------------------------------------------------------------
-USAGE
-------------------------------------------------------------
+---
 
-1. BASIC SINGLETON
+## 🛠 Usage
 
-Add this to a class:
+### 1. 🔒 Register a simple singleton
 
     use Au9500\LaravelAutoSingleton\Attributes\AutoSingleton;
 
@@ -61,82 +60,92 @@ Add this to a class:
     class PaymentService {
     }
 
-Laravel now automatically binds PaymentService as a singleton.  
-You can inject it like this:
+Inject anywhere:
 
     public function __construct(PaymentService $service) {
         $this->service = $service;
     }
 
-2. SINGLETON WITH INTERFACE BINDING
+Laravel now resolves this service as a singleton.
 
-   interface UserRepository {}
+---
 
-   #[AutoSingleton(UserRepository::class)]
-   class EloquentUserRepository implements UserRepository {
-   }
+### 2. 🎭 Bind an interface
 
-Now this works:
+    interface UserRepository {}
+
+    #[AutoSingleton(UserRepository::class)]
+    class EloquentUserRepository implements UserRepository {
+    }
+
+Now you may type-hint the interface:
 
     public function __construct(UserRepository $repo) {
         $this->repo = $repo;
     }
 
-The interface is automatically bound to its implementation.
+Laravel automatically binds the interface → implementation as a singleton.
 
-3. DISABLING AUTO REGISTRATION
+---
 
-In config/auto-singleton.php:
+### 3. 🚫 Disable auto-registration
+
+In your config:
 
     'enabled' => false,
 
-------------------------------------------------------------
-HOW IT WORKS
-------------------------------------------------------------
+This disables all automatic registration.
 
-1. Laravel boots the service provider
-2. The provider reads configured directories
-3. The composer classmap is scanned
-4. All classes in those directories are inspected via Reflection
-5. If a class has #[AutoSingleton], it is auto-bound
-6. If an abstract/interface is provided, it binds abstract -> concrete
-7. All bindings are singletons
+---
 
-------------------------------------------------------------
-TESTING
-------------------------------------------------------------
+## 🔍 How It Works
 
-This package includes full PHPUnit + Orchestra Testbench tests.  
-Run:
+1. Laravel boots and loads this package's ServiceProvider
+2. Config tells the provider which directories to scan
+3. The Composer classmap is inspected
+4. Every class in the configured directories is checked via Reflection
+5. If it has the AutoSingleton attribute:
+    - It is registered as a singleton
+6. If the attribute specifies an abstract/interface:
+    - That abstract is bound to the class
+
+No extra code. No boilerplate. Zero maintenance.
+
+---
+
+## 🧪 Testing
+
+The package ships with full PHPUnit and Orchestra Testbench support.  
+Run the test suite with:
 
     vendor/bin/phpunit
 
-Included tests check:
+Tests cover:
 
-- singleton registration
-- interface binding
-- ignoring classes without attributes
-- disabling via config
-- directory filtering
+- ✔️ Basic singleton registration
+- ✔️ Interface binding
+- ✔️ Ignoring non-attributed classes
+- ✔️ Config disabling behavior
+- ✔️ Directory filtering
 
-------------------------------------------------------------
-REQUIREMENTS
-------------------------------------------------------------
+---
 
-- PHP 8.2 or later
+## 🛡 Requirements
+
+- PHP 8.2+
 - Laravel 10, 11, or 12
 
-------------------------------------------------------------
-CONTRIBUTING
-------------------------------------------------------------
+---
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
-3. Commit changes
-4. Open a pull request
+3. Commit your changes
+4. Open a Pull Request
 
-------------------------------------------------------------
-LICENSE
-------------------------------------------------------------
+---
 
-MIT license.
+## 📄 License
+
+MIT License.
